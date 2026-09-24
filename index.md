@@ -1,6 +1,8 @@
 ---
 title: 台本一覧
 ---
+[このサイトと台本の作り方 →](guide.md)
+
 | 題名 | 広告主 | 種別 | 制作者 | 作成日 | 更新日 | 版 | md |
 |---|---|---|---|---|---|---|---|
 {%- for p in site.pages %}{%- assign m = site.data.scripts[p.path] %}{%- if m and m.archived != true %}{%- assign dir = p.path | split: '/' | first %}{%- assign fam = p.path | replace: '.md', '/' %}{%- assign n = 0 %}{%- for e in site.data.scripts %}{%- if e[0] contains fam and e[1].archived %}{%- assign n = n | plus: 1 %}{%- endif %}{%- endfor %}
