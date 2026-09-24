@@ -30,6 +30,8 @@ kinds:
   plan: 検証計画
 exclude:
   - README.md
+  - publish.py
+  - __pycache__
   - Gemfile
   - Gemfile.lock
   - node_modules
