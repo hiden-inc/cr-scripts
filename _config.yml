@@ -1,0 +1,31 @@
+title: CR台本
+org: hiden-inc
+repository: hiden-inc/cr-scripts
+lang: ja
+markdown: kramdown
+kramdown:
+  input: GFM
+  hard_wrap: false
+permalink: pretty
+plugins:
+  - jekyll-optional-front-matter
+  - jekyll-titles-from-headings
+  - jekyll-relative-links
+optional_front_matter:
+  remove_originals: false
+titles_from_headings:
+  enabled: true
+  strip_title: true
+defaults:
+  - scope:
+      path: ""
+    values:
+      layout: default
+# 広告主ディレクトリ → 表示名（一覧ページ用の宣言。追加はここに1行）
+advertisers:
+  hackz: ハックツ就職
+exclude:
+  - README.md
+  - Gemfile
+  - Gemfile.lock
+  - node_modules
