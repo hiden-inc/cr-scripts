@@ -1,0 +1,24 @@
+# ページのメタ情報。キー = md のパス。新しい版ほど上に書く。
+# kind: script | plan / archived: true = 旧版（一覧に出ない） / note: その版の変更点
+hackz/2026-10-overview.md:
+  kind: plan
+  author: ryo
+  created: "2026-09-24"
+  updated: "2026-09-24"
+  version: 1
+  note: 初版
+hackz/2026-10-a1-gyakusetsu.md:
+  kind: script
+  author: ryo
+  created: "2026-09-24"
+  updated: "2026-09-24"
+  version: 6
+  note: 全面改稿（冒頭1種・8カット・TTS実測の秒数・顔なし指定）
+hackz/2026-10-a1-gyakusetsu/v5.md:
+  kind: script
+  archived: true
+  author: yusaku arai
+  created: "2026-09-24"
+  updated: "2026-09-24"
+  version: 5
+  note: 初稿（冒頭3種・9カット）

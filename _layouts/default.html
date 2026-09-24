@@ -1,3 +1,8 @@
+{%- assign m = site.data.scripts[page.path] -%}
+{%- assign kind = m.kind | default: 'index' -%}
+{%- if m.archived -%}{%- assign parts = page.path | split: '/' -%}{%- assign base = parts | pop | join: '/' -%}{%- else -%}{%- assign base = page.path | replace: '.md', '' -%}{%- endif -%}
+{%- assign cur_path = base | append: '.md' -%}{%- assign fam = base | append: '/' -%}
+{%- assign cur = site.data.scripts[cur_path] -%}{%- assign cur_page = site.pages | where: 'path', cur_path | first -%}
 <!doctype html>
 <html lang="ja">
 <head>
@@ -10,17 +15,33 @@
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Shippori+Mincho+B1:wght@700&family=Noto+Sans+JP:wght@400;500;700&family=IBM+Plex+Mono:wght@500&display=swap">
 <link rel="stylesheet" href="{{ '/assets/css/style.css' | relative_url }}">
 </head>
-<body>
+<body data-kind="{{ kind }}">
 <header class="site">
   <a class="brand" href="{{ '/' | relative_url }}">{{ site.title }}<small>{{ site.org }}</small></a>
-  {% if page.name != 'index.md' %}<a class="btn" href="{{ page.path | relative_url }}" download><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M8 2v8M4.5 6.5 8 10l3.5-3.5M2.5 13.5h11"/></svg>md保存</a>{% endif %}
+  {% if m %}<a class="btn" href="{{ page.path | relative_url }}" download><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M8 2v8M4.5 6.5 8 10l3.5-3.5M2.5 13.5h11"/></svg>md保存</a>{% endif %}
 </header>
 <main class="script">
+{% if m %}<span class="kind">{{ site.kinds[m.kind] | default: m.kind }}{% if m.archived %} · 旧版{% endif %}</span>{% endif %}
 {% if page.title %}<h1 class="title">{{ page.title }}</h1>{% endif %}
-{% if page.name != 'index.md' %}<details class="toc"><summary>目次</summary><ol></ol></details>{% endif %}
+{% if m %}
+<div class="meta">
+  <span>制作者 <b>{{ m.author }}</b></span>
+  <span>作成 <b>{{ cur.created | default: m.created }}</b></span>
+  <span>{% if m.archived %}この版{% else %}更新{% endif %} <b>{{ m.updated }}</b></span>
+  <details class="versions"><summary>版 <b>v{{ m.version }}</b></summary>
+    <ul>
+      <li>{% if m.archived %}<a href="{{ cur_page.url | relative_url }}">v{{ cur.version }}</a>{% else %}<b>v{{ cur.version }}</b>{% endif %} <span>{{ cur.updated }}</span> · 最新{% if cur.note %} · {{ cur.note }}{% endif %}</li>
+      {%- for e in site.data.scripts %}{% assign p = e[0] %}{% assign o = e[1] %}{% if p contains fam and o.archived %}{% assign op = site.pages | where: 'path', p | first %}
+      <li>{% if p == page.path %}<b>v{{ o.version }}</b>{% else %}<a href="{{ op.url | relative_url }}">v{{ o.version }}</a>{% endif %} <span>{{ o.updated }}</span>{% if o.note %} · {{ o.note }}{% endif %}{% if o.author != cur.author %} · {{ o.author }}{% endif %}</li>{% endif %}{% endfor %}
+    </ul>
+  </details>
+</div>
+{% if m.archived %}<p class="notice">これは v{{ m.version }}（{{ m.updated }}）の旧版です。<a href="{{ cur_page.url | relative_url }}">最新版 v{{ cur.version }} を開く</a></p>{% endif %}
+<details class="toc"><summary>目次</summary><ol></ol></details>
+{% endif %}
 {{ content }}
 </main>
-<footer class="foot"><span>{{ site.repository }}</span><span>更新 {{ site.time | date: "%Y-%m-%d" }}</span>{% if page.name != 'index.md' %}<a href="{{ page.path | relative_url }}" download>md保存</a>{% endif %}</footer>
+<footer class="foot"><span>{{ site.repository }}</span><span>ビルド {{ site.time | date: "%Y-%m-%d" }}</span>{% if m %}<a href="{{ page.path | relative_url }}" download>md保存</a>{% endif %}</footer>
 <script src="{{ '/assets/js/script.js' | relative_url }}"></script>
 </body>
 </html>

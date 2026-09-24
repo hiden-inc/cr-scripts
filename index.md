@@ -1,6 +1,8 @@
 ---
 title: 台本一覧
 ---
-{% for p in site.pages %}{% if p.path != page.path and p.path contains '.md' %}{% assign dir = p.path | split: '/' | first %}
-- [{{ p.title }}]({{ p.url | relative_url }}) — {{ site.advertisers[dir] | default: dir }} ／ [md]({{ p.path | relative_url }})
-{% endif %}{% endfor %}
+| 題名 | 広告主 | 種別 | 制作者 | 作成日 | 更新日 | 版 | md |
+|---|---|---|---|---|---|---|---|
+{%- for p in site.pages %}{%- assign m = site.data.scripts[p.path] %}{%- if m and m.archived != true %}{%- assign dir = p.path | split: '/' | first %}{%- assign fam = p.path | replace: '.md', '/' %}{%- assign n = 0 %}{%- for e in site.data.scripts %}{%- if e[0] contains fam and e[1].archived %}{%- assign n = n | plus: 1 %}{%- endif %}{%- endfor %}
+| [{{ p.title }}]({{ p.url | relative_url }}) | {{ site.advertisers[dir] | default: dir }} | {{ site.kinds[m.kind] | default: m.kind }} | {{ m.author }} | {{ m.created }} | {{ m.updated }} | v{{ m.version }}{% if n > 0 %} <span class="tag">旧版 {{ n }}</span>{% endif %} | [md]({{ p.path | relative_url }}) |
+{%- endif %}{%- endfor %}

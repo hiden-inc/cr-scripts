@@ -7,7 +7,7 @@
   function apply(v) {
     view = v;
     try { localStorage.setItem(KEY, v); } catch (e) {}
-    document.querySelectorAll('.table-wrap').forEach(function (w) {
+    document.querySelectorAll('.table-wrap:not(.is-fixed)').forEach(function (w) {
       w.classList.toggle('is-table', v === 'table');
       w.classList.toggle('is-cards', v === 'cards');
     });
@@ -25,14 +25,16 @@
         else if (heads[i] === '開始' || heads[i] === '終了') td.setAttribute('data-role', 'time');
       });
     });
+    var fixed = document.body.getAttribute('data-kind') === 'index';
     var sw = document.createElement('div');
     sw.className = 'view-switch'; sw.setAttribute('role', 'group'); sw.setAttribute('aria-label', '表示切替');
     sw.innerHTML = '<button type="button" data-view="table">表</button><button type="button" data-view="cards">カード</button>';
     sw.addEventListener('click', function (e) {
       var b = e.target.closest('button'); if (b) apply(b.getAttribute('data-view'));
     });
-    var w = document.createElement('div'); w.className = 'table-wrap';
-    t.parentNode.insertBefore(sw, t); t.parentNode.insertBefore(w, t); w.appendChild(t);
+    var w = document.createElement('div'); w.className = fixed ? 'table-wrap is-fixed is-cards' : 'table-wrap';
+    if (!fixed) t.parentNode.insertBefore(sw, t);
+    t.parentNode.insertBefore(w, t); w.appendChild(t);
   });
   apply(view);
 
