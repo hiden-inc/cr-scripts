@@ -24,10 +24,10 @@ defaults:
 # 広告主ディレクトリ → 表示名（一覧ページ用の宣言。追加はここに1行）
 advertisers:
   hackz: ハックツ就職
-# 種別 → 表示名
+# 種別 → 表示名（一覧ページはこの順にセクションを分けて表を出す）
 kinds:
-  script: 台本
   plan: 検証計画
+  script: 台本
 exclude:
   - README.md
   - publish.py

@@ -157,6 +157,9 @@ body[data-kind="index"] .script > * { max-width: none; }
 body[data-kind="index"] .script td:first-child { font-weight: 700; }
 body[data-kind="index"] .script td:first-child a { text-decoration: none; }
 body[data-kind="index"] .script td:first-child a:hover { text-decoration: underline; }
+body[data-kind="index"] .script h2.sec { padding-left: 12px; border-left: 4px solid var(--sec-color); }
+body[data-kind="index"] .script h2.sec-script { --sec-color: oklch(62% 0.15 45); }
+body[data-kind="index"] .script h2.sec-plan { --sec-color: oklch(62% 0.12 250); }
 .kind { display: inline-block; font-size: 0.75rem; letter-spacing: 0.08em; font-weight: 500; color: var(--color-accent-ink); border: 1px solid currentColor; border-radius: 999px; padding: 2px 10px; margin: var(--space-md) 0 0; }
 .meta { color: var(--color-ink-2); font-size: var(--text-sm); line-height: 1.7; margin: 0 0 var(--space-lg); padding-bottom: var(--space-lg); border-bottom: var(--rule); display: flex; flex-wrap: wrap; gap: 2px var(--space-md); }
 .meta b { font-weight: 500; color: var(--color-ink); }
